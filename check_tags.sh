@@ -14,7 +14,7 @@ if [ "$GITHUB_TOKEN" != "" ]; then
         echo "Building on Mac because we have no ZIP"
         export SHOULD_BUILD="yes"
       fi
-    elif [[ "$APPVEYOR_OS_NAME" == "windows" ]]; then
+    elif [[ "$CI_WINDOWS" == "True" ]]; then
       HAVE_EXE=$(echo $VSCODIUM_ASSETS | jq 'map(.name) | contains(["exe"])')
       if [[ "$HAVE_EXE" != "true" ]]; then
         echo "Building on Windows because we have no EXE"

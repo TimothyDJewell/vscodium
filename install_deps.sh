@@ -4,7 +4,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
   brew update
   brew install yarn --without-node
   brew install jq zip
-elif [[ "$APPVEYOR_OS_NAME" == "windows" ]]; then
+elif [[ "$CI_WINDOWS" == "True" ]]; then
   choco install jq
 else
   sudo apt-get update

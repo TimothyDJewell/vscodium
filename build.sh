@@ -11,7 +11,7 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
 
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     npx gulp vscode-darwin-min
-  elif [[ "$APPVEYOR_OS_NAME" == "windows" ]]; then
+  elif [[ "$CI_WINDOWS" == "True" ]]; then
     npx gulp vscode-win32-x64-min
   else
     # microsoft adds their apt repo to sources
