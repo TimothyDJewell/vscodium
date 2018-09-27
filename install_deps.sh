@@ -5,6 +5,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
   brew install yarn --without-node
   brew install jq zip
 elif [[ "$CI_WINDOWS" == "True" ]]; then
+  npm install cross-env --global
   choco install jq
 else
   sudo apt-get update

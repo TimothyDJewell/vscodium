@@ -7,12 +7,11 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
   cat product.json.bak | jq 'setpath(["extensionsGallery"]; {"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery", "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index", "itemUrl": "https://marketplace.visualstudio.com/items"}) | setpath(["nameShort"]; "VSCodium") | setpath(["nameLong"]; "VSCodium") | setpath(["applicationName"]; "vscodium") | setpath(["win32MutexName"]; "vscodium") | setpath(["win32DirName"]; "VSCodium") | setpath(["win32NameVersion"]; "VSCodium") | setpath(["win32RegValueName"]; "VSCodium") | setpath(["win32AppUserModelId"]; "Microsoft.VSCodium") | setpath(["win32ShellNameShort"]; "V&SCodium") | setpath(["urlProtocol"]; "vscodium")' > product.json
   cat product.json
   export NODE_ENV=production
-  export NODE_OPTIONS="--max-old-space-size=4096"
 
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     npx gulp vscode-darwin-min
   elif [[ "$CI_WINDOWS" == "True" ]]; then
-    npx gulp vscode-win32-x64-min
+    npx cross-env NODE_OPTIONS="--max_old_space_size=8192" gulp vscode-win32-x64-min
   else
     # microsoft adds their apt repo to sources
     # unless the app name is code-oss
