@@ -12,3 +12,7 @@ export LATEST_MS_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
 echo "Got the latest MS tag: ${LATEST_MS_TAG}"
 git checkout $LATEST_MS_TAG
 cd ..
+
+EnvVar=$(printenv)
+echo "Environment Variables at end of get_repo.sh: ${EnvVar}"
+echo "End get_repo.sh"
