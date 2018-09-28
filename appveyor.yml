@@ -1,0 +1,24 @@
+image: Visual Studio 2017
+install:
+- ps: >-
+    Install-Product node LTS x64
+
+    bash ./install_deps.sh
+
+    bash ./get_repo.sh
+
+    bash ./check_tags.sh
+build_script:
+- ps: bash ./build.sh
+test: off
+artifacts:
+- path: .\*.zip
+before_deploy:
+- ps: bash ./create_zip.sh
+deploy:
+- provider: GitHub
+  tag: $LATEST_MS_TAG
+  auth_token: $GITHUB_TOKEN
+  artifact: .\*.zip
+  on:
+    $SHOULD_BUILD: yes
