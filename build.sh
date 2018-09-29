@@ -11,7 +11,8 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     npx gulp vscode-darwin-min
   elif [[ "$CI_WINDOWS" == "True" ]]; then
-    npx cross-env NODE_OPTIONS="--max_old_space_size=2048" gulp vscode-win32-x64-min
+    #npx cross-env NODE_OPTIONS="--max_old_space_size=2048" gulp vscode-win32-x64-min
+    npx gulp NODE_OPTIONS="--max_old_space_size=2048" vscode-win32-x64-min
   else
     # microsoft adds their apt repo to sources
     # unless the app name is code-oss
