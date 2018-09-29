@@ -3,11 +3,11 @@ install:
 - ps: >-
     Install-Product node LTS x64
 
-    bash ./install_deps.sh
+    ./install_deps.sh
 
-    bash ./get_repo.sh
+    ./get_repo.sh
 
-    bash ./check_tags.sh
+    ./check_tags.sh
 build_script:
 - ps: bash ./build.sh
 test: off
