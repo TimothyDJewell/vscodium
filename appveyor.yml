@@ -1,16 +1,11 @@
 image: Visual Studio 2017
-install:
-- ps: Install-Product node LTS x64
-- bash: ./install_deps.sh
-- bash: ./get_repo.sh
-- bash: ./check_tags.sh
 build_script:
-- bash: ./build.sh
+- ps: bash ./build.sh
 test: off
 artifacts:
 - path: .\*.zip
 before_deploy:
-- bash: ./create_zip.sh
+- ps: bash ./create_zip.sh
 deploy:
 - provider: GitHub
   tag: $LATEST_MS_TAG
