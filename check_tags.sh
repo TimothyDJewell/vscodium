@@ -1,7 +1,5 @@
 #!/bin/bash
 
-EnvVar=$(printenv)
-echo "Environment Variables: ${EnvVar}"
 echo "Sending request to https://api.github.com/repos/vscodium/vscodium/releases/tags/${LATEST_MS_TAG}"
 GITHUB_RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/vscodium/vscodium/releases/tags/$LATEST_MS_TAG)
 echo "Github response: ${GITHUB_RESPONSE}"
