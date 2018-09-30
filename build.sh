@@ -14,8 +14,8 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
     #npx cross-env NODE_OPTIONS="--max_old_space_size=2048" gulp vscode-win32-x64-min
     #export NODE_OPTIONS="--max_old_space_size=2048"
     npx gulp vscode-win32-x64-min
-    npx gulp vscode-win32-x64-system
-    npx gulp vscode-win32-x64-user
+    npx gulp vscode-win32-x64-system-setup
+    npx gulp vscode-win32-x64-user-setup
     npx gulp vscode-win32-x64-archive
   else
     # microsoft adds their apt repo to sources
