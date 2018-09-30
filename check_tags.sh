@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo "Sending request to https://api.github.com/repos/vscodium/vscodium/releases/tags/${LATEST_MS_TAG}"
 GITHUB_RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/vscodium/vscodium/releases/tags/$LATEST_MS_TAG)
 echo "Github response: ${GITHUB_RESPONSE}"
 VSCODIUM_ASSETS=$(echo $GITHUB_RESPONSE | jq '.assets')
@@ -13,12 +12,6 @@ if [ "$GITHUB_TOKEN" != "" ]; then
       HAVE_MAC=$(echo $VSCODIUM_ASSETS | jq 'map(.name) | contains(["darwin"])')
       if [[ "$HAVE_MAC" != "true" ]]; then
         echo "Building on Mac because we have no ZIP"
-        export SHOULD_BUILD="yes"
-      fi
-    elif [[ "$CI_WINDOWS" == "True" ]]; then
-      HAVE_EXE=$(echo $VSCODIUM_ASSETS | jq 'map(.name) | contains(["win32"])')
-      if [[ "$HAVE_EXE" != "true" ]]; then
-        echo "Building on Windows because we have no ZIP"
         export SHOULD_BUILD="yes"
       fi
     else
