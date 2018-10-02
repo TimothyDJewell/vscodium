@@ -22,6 +22,9 @@ build_script:
     bash ./build.sh
 
 
+    Write-Output "LastExitCode: $LASTEXITCODE"
+
+
     function PushBuildArtifact {
       param([string]$SourceFile, [string]$DestinationFile)
       if (Test-Path ".\vscode\.build\$SourceFile") {
