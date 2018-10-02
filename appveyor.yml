@@ -1,13 +1,52 @@
+version: 1.0.{build}
 image: Visual Studio 2017
+environment:
+  GITHUB_TOKEN:
+    secure: NVqlzdcyCugxVNVqQEIwwuDUt1U8jXa4DfPzsJhRARouQSAleu42cDi+1TMW0whm
+install:
+- ps: >-
+    Install-Product node LTS x64
+
+    choco install jq
+
+    bash ./get_repo.sh
+
+    $env:LATEST_MS_TAG="$(git -C vscode describe --tags)"
+
+    git -C vscode revert 90c13ff d1fed9e --no-commit
+
+    Write-Output "Reverted a couple commits preventing setup exe build.  There may be conflicts in build/tfs/:"
+
+    git -C vscode status
+
+    . .\check_tags.ps1
+build_script:
+- ps: >-
+    bash ./build.sh
+
+
+    function PushBuildArtifact {
+      param([string]$SourceFile, [string]$DestinationFile)
+      if (Test-Path ".\vscode\.build\$SourceFile") {
+        Push-AppveyorArtifact ".\vscode\.build\$SourceFile" -FileName $DestinationFile
+      } else {
+        Write-Error "Unable to find artifact for $DestinationFile"
+      }
+    }
+
+
+    PushBuildArtifact -SourceFile 'win32-x64\system-setup\VSCodeSetup.exe' -DestinationFile "VSCode-win32-x64-$env:LATEST_MS_TAG-system-setup.exe"
+
+
+    PushBuildArtifact -SourceFile 'win32-x64\user-setup\VSCodeSetup.exe' -DestinationFile "VSCode-win32-x64-$env:LATEST_MS_TAG-user-setup.exe"
+
+
+    PushBuildArtifact -SourceFile 'win32-x64\archive\VSCode-win32-x64.zip' -DestinationFile "VSCode-win32-x64-$env:LATEST_MS_TAG.zip"
 test: off
-artifacts:
-- path: .\*.zip
-before_deploy:
-- ps: bash ./create_zip.sh
 deploy:
 - provider: GitHub
-  tag: $LATEST_MS_TAG
-  auth_token: $GITHUB_TOKEN
-  artifact: .\*.zip
+  tag: $env:LATEST_MS_TAG
+  auth_token: $env:GITHUB_TOKEN
+  artifact: .\*
   on:
-    $SHOULD_BUILD: yes
+    SHOULD_BUILD: yes
