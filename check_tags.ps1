@@ -12,7 +12,7 @@ if (!$VSCODIUM_ASSETS) {
   $env:SHOULD_BUILD = 'yes'
 }
 
-$WindowsAssets = $VSCODIUM_ASSETS | ConvertFrom-Json | Where-Object { $_.name.Contains('win32-x64') }
+$WindowsAssets = ($VSCODIUM_ASSETS | ConvertFrom-Json) | Where-Object { $_.name.Contains('win32-x64') }
 $SYSTEM_SETUP = $WindowsAssets | Where-Object { $_.name.Contains('system-setup.exe') }
 $USER_SETUP = $WindowsAssets | Where-Object { $_.name.Contains('user-setup.exe') }
 $WINDOWS_ZIP = $WindowsAssets | Where-Object { $_.name.Contains('.zip') }

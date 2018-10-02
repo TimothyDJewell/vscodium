@@ -1,8 +1,5 @@
 version: 1.0.{build}
 image: Visual Studio 2017
-environment:
-  GITHUB_TOKEN:
-    secure: NVqlzdcyCugxVNVqQEIwwuDUt1U8jXa4DfPzsJhRARouQSAleu42cDi+1TMW0whm
 install:
 - ps: >-
     Install-Product node LTS x64
