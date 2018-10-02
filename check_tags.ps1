@@ -17,8 +17,6 @@ $WindowsAssets = $VSCODIUM_ASSETS | ConvertFrom-Json | Where-Object { $_.name.Co
 $SYSTEM_SETUP = $WindowsAssets | Where-Object { $_.name.Contains('system-setup.exe') }
 $USER_SETUP = $WindowsAssets | Where-Object { $_.name.Contains('user-setup.exe') }
 $WINDOWS_ZIP = $WindowsAssets | Where-Object { $_.name.Contains('.zip') }
-echo "SYSTEM_SETUP: $SYSTEM_SETUP; USER_SETUP: $USER_SETUP; WINDOWS_ZIP: $WINDOWS_ZIP"
-echo ($SYSTEM_SETUP.GetType())
 if (!$SYSTEM_SETUP) {
   echo "Building on Windows because we have no system-setup.exe";
   $env:SHOULD_BUILD = 'yes'
