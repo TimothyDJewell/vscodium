@@ -2,7 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2017
 install:
 - ps: >-
-    Install-Product node LTS x64
+    #Install-Product node LTS x64
 
     choco install jq
 
