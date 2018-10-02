@@ -47,6 +47,5 @@ deploy:
 - provider: GitHub
   tag: $(LATEST_MS_TAG)
   auth_token: $(GITHUB_TOKEN)
-  artifact: .\*
   on:
     SHOULD_BUILD: yes
