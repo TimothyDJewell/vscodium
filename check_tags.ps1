@@ -13,9 +13,10 @@ if (!$VSCODIUM_ASSETS) {
   $env:SHOULD_BUILD = 'yes'
 }
 
-$HAVE_SYSTEM_SETUP = $VSCODIUM_ASSETS | jq 'map(.name) | contains(["win32-x64", "system-setup.exe"])'
-$HAVE_USER_SETUP = $VSCODIUM_ASSETS | jq 'map(.name) | contains(["win32-x64", "user-setup.exe"])'
-$HAVE_WINDOWS_ZIP = $VSCODIUM_ASSETS | jq 'map(.name) | contains(["win32-x64", ".zip"])'
+$WindowsAssets = $VSCODIUM_ASSETS | ConvertFrom-Json | Where-Object { $_.name.Contains('win32-x64') }
+$HAVE_SYSTEM_SETUP = [bool]$WindowsAssets | Where-Object { $_.name.Contains('system-setup.exe') }
+$HAVE_USER_SETUP = [bool]$WindowsAssets | Where-Object { $_.name.Contains('user-setup.exe') }
+$HAVE_WINDOWS_ZIP = [bool]$WindowsAssets | Where-Object { $_.name.Contains('.zip') }
 echo "HAVE_SYSTEM_SETUP: $HAVE_SYSTEM_SETUP; HAVE_USER_SETUP: $HAVE_USER_SETUP; HAVE_WINDOWS_ZIP: $HAVE_WINDOWS_ZIP"
 echo ($HAVE_SYSTEM_SETUP.GetType())
 if (!$HAVE_SYSTEM_SETUP) {
