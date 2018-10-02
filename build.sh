@@ -11,8 +11,6 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     npx gulp vscode-darwin-min
   elif [[ "$CI_WINDOWS" == "True" ]]; then
-    #npx cross-env NODE_OPTIONS="--max_old_space_size=2048" gulp vscode-win32-x64-min
-    #export NODE_OPTIONS="--max_old_space_size=2048"
     npx gulp vscode-win32-x64-min
     npx gulp vscode-win32-x64-copy-inno-updater
     npx gulp vscode-win32-x64-inno-updater
