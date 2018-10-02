@@ -45,8 +45,8 @@ build_script:
 test: off
 deploy:
 - provider: GitHub
-  tag: $env:LATEST_MS_TAG
-  auth_token: $env:GITHUB_TOKEN
+  tag: $(LATEST_MS_TAG)
+  auth_token: $(GITHUB_TOKEN)
   artifact: .\*
   on:
     SHOULD_BUILD: yes
