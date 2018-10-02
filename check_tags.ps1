@@ -14,20 +14,20 @@ if (!$VSCODIUM_ASSETS) {
 }
 
 $WindowsAssets = $VSCODIUM_ASSETS | ConvertFrom-Json | Where-Object { $_.name.Contains('win32-x64') }
-$HAVE_SYSTEM_SETUP = [bool]$WindowsAssets | Where-Object { $_.name.Contains('system-setup.exe') }
-$HAVE_USER_SETUP = [bool]$WindowsAssets | Where-Object { $_.name.Contains('user-setup.exe') }
-$HAVE_WINDOWS_ZIP = [bool]$WindowsAssets | Where-Object { $_.name.Contains('.zip') }
-echo "HAVE_SYSTEM_SETUP: $HAVE_SYSTEM_SETUP; HAVE_USER_SETUP: $HAVE_USER_SETUP; HAVE_WINDOWS_ZIP: $HAVE_WINDOWS_ZIP"
-echo ($HAVE_SYSTEM_SETUP.GetType())
-if (!$HAVE_SYSTEM_SETUP) {
+$SYSTEM_SETUP = $WindowsAssets | Where-Object { $_.name.Contains('system-setup.exe') }
+$USER_SETUP = $WindowsAssets | Where-Object { $_.name.Contains('user-setup.exe') }
+$WINDOWS_ZIP = $WindowsAssets | Where-Object { $_.name.Contains('.zip') }
+echo "SYSTEM_SETUP: $SYSTEM_SETUP; USER_SETUP: $USER_SETUP; WINDOWS_ZIP: $WINDOWS_ZIP"
+echo ($SYSTEM_SETUP.GetType())
+if (!$SYSTEM_SETUP) {
   echo "Building on Windows because we have no system-setup.exe";
   $env:SHOULD_BUILD = 'yes'
 }
-elseif (!$HAVE_USER_SETUP) {
+elseif (!$USER_SETUP) {
   echo "Building on Windows because we have no user-setup.exe";
   $env:SHOULD_BUILD = 'yes'
 }
-elseif (!$HAVE_WINDOWS_ZIP) {
+elseif (!$WINDOWS_ZIP) {
   echo "Building on Windows because we have no ZIP";
   $env:SHOULD_BUILD = 'yes'
 }
