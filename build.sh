@@ -15,7 +15,7 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
 
   export NODE_ENV=production
 
-  if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     # microsoft adds their apt repo to sources
     # unless the app name is code-oss
     # as we are renaming the application to vscodium
@@ -25,6 +25,12 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
 
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     npm run gulp vscode-darwin-min
+  elif [[ "$CI_WINDOWS" == "True" ]]; then
+    npm run gulp vscode-win32-x64-min
+    npm run gulp vscode-win32-x64-copy-inno-updater
+    npm run gulp vscode-win32-x64-system-setup
+    npm run gulp vscode-win32-x64-user-setup
+    npm run gulp vscode-win32-x64-archive
   elif [[ "$BUILDARCH" == "ia32" ]]; then
     npm run gulp vscode-linux-ia32-min
     npm run gulp vscode-linux-ia32-build-deb
