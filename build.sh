@@ -26,11 +26,11 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     npm run gulp vscode-darwin-min
   elif [[ "$CI_WINDOWS" == "True" ]]; then
-    npm run gulp vscode-win32-x64-min
-    npm run gulp vscode-win32-x64-copy-inno-updater
-    npm run gulp vscode-win32-x64-system-setup
-    npm run gulp vscode-win32-x64-user-setup
-    npm run gulp vscode-win32-x64-archive
+    npm run gulp vscode-win32-${BUILDARCH}-min
+    npm run gulp vscode-win32-${BUILDARCH}-copy-inno-updater
+    npm run gulp vscode-win32-${BUILDARCH}-system-setup
+    npm run gulp vscode-win32-${BUILDARCH}-user-setup
+    npm run gulp vscode-win32-${BUILDARCH}-archive
   elif [[ "$BUILDARCH" == "ia32" ]]; then
     npm run gulp vscode-linux-ia32-min
     npm run gulp vscode-linux-ia32-build-deb

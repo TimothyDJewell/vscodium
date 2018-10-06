@@ -13,22 +13,23 @@ if (!$VSCODIUM_ASSETS) {
   return
 }
 
-$WindowsAssets = ($VSCODIUM_ASSETS | ConvertFrom-Json) | Where-Object { $_.name.Contains('win32-x64') }
+$WindowsAssets = ($VSCODIUM_ASSETS | ConvertFrom-Json) |
+  Where-Object { $_.name.Contains("win32-$env:BUILDARCH") }
 $SYSTEM_SETUP = $WindowsAssets | Where-Object { $_.name.Contains('system-setup.exe') }
 $USER_SETUP = $WindowsAssets | Where-Object { $_.name.Contains('user-setup.exe') }
 $WINDOWS_ZIP = $WindowsAssets | Where-Object { $_.name.Contains('.zip') }
 if (!$SYSTEM_SETUP) {
-  echo "Building on Windows because we have no system-setup.exe";
+  echo "Building on Windows $env:BUILDARCH because we have no system-setup.exe";
   $env:SHOULD_BUILD = 'yes'
 }
 elseif (!$USER_SETUP) {
-  echo "Building on Windows because we have no user-setup.exe";
+  echo "Building on Windows $env:BUILDARCH because we have no user-setup.exe";
   $env:SHOULD_BUILD = 'yes'
 }
 elseif (!$WINDOWS_ZIP) {
-  echo "Building on Windows because we have no ZIP";
+  echo "Building on Windows $env:BUILDARCH because we have no ZIP";
   $env:SHOULD_BUILD = 'yes'
 }
 else {
-  echo "Already have all the Windows builds"
+  echo "Already have all the Windows $env:BUILDARCH builds"
 }

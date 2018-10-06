@@ -1,4 +1,6 @@
 image: Visual Studio 2017
+environment:
+  BUILDARCH: x64
 install:
 - ps: >-
     Install-Product node LTS x64
@@ -20,24 +22,7 @@ build_script:
 - ps: >-
     bash ./build.sh
 
-
-    function PushBuildArtifact {
-      param([string]$SourceFile, [string]$DestinationFile)
-      if (Test-Path ".\vscode\.build\$SourceFile") {
-        Push-AppveyorArtifact ".\vscode\.build\$SourceFile" -FileName $DestinationFile
-      } else {
-        Write-Error "Unable to find artifact for $DestinationFile"
-      }
-    }
-
-
-    PushBuildArtifact -SourceFile 'win32-x64\system-setup\VSCodeSetup.exe' -DestinationFile "VSCode-win32-x64-$env:LATEST_MS_TAG-system-setup.exe"
-
-
-    PushBuildArtifact -SourceFile 'win32-x64\user-setup\VSCodeSetup.exe' -DestinationFile "VSCode-win32-x64-$env:LATEST_MS_TAG-user-setup.exe"
-
-
-    PushBuildArtifact -SourceFile 'win32-x64\archive\VSCode-win32-x64.zip' -DestinationFile "VSCode-win32-x64-$env:LATEST_MS_TAG.zip"
+    .\publish_build_artifacts.ps1
 test: off
 deploy:
 - provider: GitHub
