@@ -1,6 +1,8 @@
 image: Visual Studio 2017
 environment:
-  BUILDARCH: x64
+  matrix:
+  - BUILDARCH: ia32
+  - BUILDARCH: x64
 install:
 - ps: >-
     Install-Product node LTS x64
