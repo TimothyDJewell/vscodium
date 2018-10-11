@@ -24,7 +24,7 @@ build_script:
 - ps: >-
     bash ./build.sh
 
-    .\publish_build_artifacts.ps1
+    .\push_build_artifacts.ps1
 test: off
 deploy:
 - provider: GitHub
