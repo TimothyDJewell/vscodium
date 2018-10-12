@@ -14,8 +14,12 @@ yarn
 bash ../customize_product_json.sh
 bash ../undo_telemetry.sh
 
+Write-Output "APPDATA: '$env:APPDATA'"
+Write-Output "NPM ROOT: $(npm root -g)"
 Write-Output "Recording NPM locations:"
-Get-ChildItem "$env:APPDATA\npm"
+Get-ChildItem "$env:APPDATA\npm" | Write-Output
+Write-Output "Recording other possible NPM locations:"
+Get-ChildItem "$env:APPDATA\npm\node_modules" | Write-Output
 
 npm run gulp "vscode-win32-$env:BUILDARCH-min"
 npm run gulp "vscode-win32-$env:BUILDARCH-copy-inno-updater"
