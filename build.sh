@@ -8,14 +8,12 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
   fi
 
   yarn
-  mv product.json product.json.bak
-  cat product.json.bak | jq 'setpath(["extensionsGallery"]; {"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery", "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index", "itemUrl": "https://marketplace.visualstudio.com/items"}) | setpath(["nameShort"]; "VSCodium") | setpath(["nameLong"]; "VSCodium") | setpath(["applicationName"]; "vscodium") | setpath(["win32MutexName"]; "vscodium") | setpath(["win32DirName"]; "VSCodium") | setpath(["win32NameVersion"]; "VSCodium") | setpath(["win32RegValueName"]; "VSCodium") | setpath(["win32AppUserModelId"]; "Microsoft.VSCodium") | setpath(["win32ShellNameShort"]; "V&SCodium") | setpath(["urlProtocol"]; "vscodium")' > product.json
-  cat product.json
+  ../customize_product_json.sh
   ../undo_telemetry.sh
 
   export NODE_ENV=production
 
-  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
     # microsoft adds their apt repo to sources
     # unless the app name is code-oss
     # as we are renaming the application to vscodium
@@ -25,12 +23,6 @@ if [[ "$SHOULD_BUILD" == "yes" ]]; then
 
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     npm run gulp vscode-darwin-min
-  elif [[ "$CI_WINDOWS" == "True" ]]; then
-    npm run gulp vscode-win32-${BUILDARCH}-min
-    npm run gulp vscode-win32-${BUILDARCH}-copy-inno-updater
-    npm run gulp vscode-win32-${BUILDARCH}-system-setup
-    npm run gulp vscode-win32-${BUILDARCH}-user-setup
-    npm run gulp vscode-win32-${BUILDARCH}-archive
   elif [[ "$BUILDARCH" == "ia32" ]]; then
     npm run gulp vscode-linux-ia32-min
     npm run gulp vscode-linux-ia32-build-deb

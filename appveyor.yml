@@ -22,7 +22,7 @@ install:
     . .\check_tags.ps1
 build_script:
 - ps: >-
-    bash ./build.sh
+    .\build.ps1
 
     .\push_build_artifacts.ps1
 test: off
