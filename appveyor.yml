@@ -5,6 +5,8 @@ environment:
   - BUILDARCH: ia32
 install:
 - ps: >-
+   $env:Path -split ';'
+
     Install-Product node LTS x64
 
     choco install jq
