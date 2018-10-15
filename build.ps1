@@ -41,11 +41,13 @@ Get-ChildFiles "$(yarn global bin)" | Write-Output
 Write-Output "Recording yarn dir location"
 Get-ChildFiles "$(yarn global dir)" | Write-Output
 
-npm run gulp "vscode-win32-$env:BUILDARCH-min"
-npm run gulp "vscode-win32-$env:BUILDARCH-copy-inno-updater"
-npm run gulp "vscode-win32-$env:BUILDARCH-system-setup"
-npm run gulp "vscode-win32-$env:BUILDARCH-user-setup"
-npm run gulp "vscode-win32-$env:BUILDARCH-archive"
+yarn run
+
+yarn run gulp "vscode-win32-$env:BUILDARCH-min"
+yarn run gulp "vscode-win32-$env:BUILDARCH-copy-inno-updater"
+yarn run gulp "vscode-win32-$env:BUILDARCH-system-setup"
+yarn run gulp "vscode-win32-$env:BUILDARCH-user-setup"
+yarn run gulp "vscode-win32-$env:BUILDARCH-archive"
 
 $env:npm_config_arch = $preexistingNpmArch
 Set-Location ..
