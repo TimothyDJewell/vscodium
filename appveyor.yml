@@ -5,15 +5,11 @@ environment:
   - BUILDARCH: ia32
 install:
 - ps: >-
-   $env:Path -split ';'
-
     Install-Product node LTS x64
 
     choco install jq
 
-    bash ./get_repo.sh
-
-    $env:LATEST_MS_TAG="$(git -C vscode describe --tags)"
+    . .\get_repo.ps1
 
     git -C vscode revert 90c13ff d1fed9e --no-commit
 
